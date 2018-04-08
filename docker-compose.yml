@@ -1,0 +1,9 @@
+version: '2.0'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports: ["8000:8000"]
+    volumes: ['./backend:/usr/src/app']
+    command: bash -c 'cd /usr/src/app && gunicorn todo.wsgi:application --log-file=- -b 0:8000 --workers 3'

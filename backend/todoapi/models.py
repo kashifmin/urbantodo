@@ -19,13 +19,31 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def status(self):
+        try:
+            subtasks = SubTask.objects.filter(parent=self)
+            for i in subtasks:
+                if i.task_status == 'Pending':
+                    return 'Pending'
+        except Exception:
+            return self.task_status
+
+    @property
+    def subtasks(self):
+        try:
+            subtasks = SubTask.objects.filter(parent=self)
+            return subtasks
+        except Exception:
+            return []
+
 class SubTask(models.Model):
     STATUSES = (
         ('P', 'Pending'),
         ('C', 'Complete'),
     )
     title = models.CharField(max_length=240)
-    task_status = models.CharField(max_length=1, choices=STATUSES)
+    status = models.CharField(max_length=1, choices=STATUSES)
 
     parent = models.ForeignKey(Task, on_delete=models.CASCADE)
 

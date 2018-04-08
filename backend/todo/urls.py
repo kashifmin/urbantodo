@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from tastypie.api import Api
-from todoapi.api import TaskResource
+from todoapi.api import TaskResource, UserResource, AuthResource
 from django.conf.urls import url, include
 
 v1_api = Api(api_name='v1')
 v1_api.register(TaskResource())
+v1_api.register(UserResource())
+v1_api.register(AuthResource())
 
 
 urlpatterns = [

@@ -28,7 +28,7 @@ class SubTaskResource(ModelResource):
 class TaskResource(ModelResource):
     status = fields.CharField(attribute='status')
     subtasks = fields.ToManyField(SubTaskResource, attribute='subtasks', full=True)
-    owner = fields.ToOneField(UserResource, attribute='owner', full=True)
+
     class Meta:
         authentication = ApiKeyAuthentication()
         authorization = Authorization()

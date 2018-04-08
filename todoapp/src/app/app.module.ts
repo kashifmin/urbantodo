@@ -9,7 +9,8 @@ import { TaskListComponent } from './pages/tasks/task-list/task-list.component';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
-  
+  { path: "tasks", component: TaskListComponent },
+  { path: "", component: LoginComponent, pathMatch: 'prefix' }
 ]
 
 @NgModule({

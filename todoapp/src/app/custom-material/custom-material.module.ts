@@ -1,10 +1,36 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { 
+  MatToolbarModule,
+  MatCardModule,
+  MatButtonModule,
+  MatInputModule,
+  MatTabsModule,
+  MatFormFieldModule,
+  MatOptionModule,
+  MatSelectModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
-    CommonModule
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule
   ],
-  declarations: []
+  exports: [
+    MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule
+  ]
 })
 export class CustomMaterialModule { }

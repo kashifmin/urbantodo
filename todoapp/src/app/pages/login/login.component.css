@@ -1,0 +1,10 @@
+.login-card {
+    margin: auto;
+    width: 30%;
+}
+
+.example-container > * {
+    display: block;
+    margin: auto;
+    width: 80%;
+}

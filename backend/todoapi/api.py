@@ -33,9 +33,16 @@ class TaskResource(ModelResource):
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
         queryset = Task.objects.all()
-
         excludes = ['task_status']
         resource_name = 'task'
+
+    def obj_get_list(self, bundle, **kwargs):
+        req_user = bundle.request.user
+        try:
+            tasks = Task.objects.filter(owner=req_user)
+            return tasks
+        except:
+            return []
 
  
 class AuthResource(Resource):

@@ -12,7 +12,7 @@ class Task(models.Model):
     task_status = models.CharField(max_length=1, choices=STATUSES)
     due_date = models.DateField()
     
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

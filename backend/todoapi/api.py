@@ -8,7 +8,6 @@ from todoapi.models import Task, SubTask
 from django.conf.urls import url
 
 
-
 class UserResource(ModelResource):
     class Meta:
         authentication = ApiKeyAuthentication()
@@ -16,6 +15,7 @@ class UserResource(ModelResource):
         queryset = User.objects.all()
         fields = ['email', 'username', 'first_name', 'last_name']
         resource_name = 'user'
+    
 
 class SubTaskResource(ModelResource):
     
@@ -28,7 +28,7 @@ class SubTaskResource(ModelResource):
 class TaskResource(ModelResource):
     status = fields.CharField(attribute='status')
     subtasks = fields.ToManyField(SubTaskResource, attribute='subtasks', full=True)
-    owner = fields.ToOneField(UserResource, attribute='created_by', full=True)
+    owner = fields.ToOneField(UserResource, attribute='owner', full=True)
     class Meta:
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
@@ -50,14 +50,14 @@ class AuthResource(Resource):
         pass
     
     def obj_get(self, request=None, **kwargs):
-        user = kwargs['bundle'].request.user
+        req_user = kwargs['bundle'].request.user
 
         try:
-            res = ApiKey.objects.get(user=user)
+            res = ApiKey.objects.get(user=req_user)
             res.key = None
             res.save()
         except ApiKey.DoesNotExist:
-            res = ApiKey.objects.create(user=user)
+            res = ApiKey.objects.create(user=req_user)
 
 
         return res

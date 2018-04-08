@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { TaskListComponent } from './pages/tasks/task-list/task-list.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   
@@ -12,7 +14,9 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TaskListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

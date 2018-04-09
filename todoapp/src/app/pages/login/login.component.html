@@ -5,14 +5,14 @@
       <mat-tab label="LOGIN">
         <div class="example-container">
           <mat-form-field>
-            <input matInput placeholder="Username">
+            <input matInput placeholder="Username" [(ngModel)]="user.username">
           </mat-form-field>
         
           <mat-form-field>
-            <input matInput placeholder="Password">
+            <input matInput placeholder="Password" [(ngModel)]="user.password">
           </mat-form-field>
           
-          <button mat-raised-button color="primary">LOGIN</button>
+          <button mat-raised-button color="primary" (click)="onLogin()">LOGIN</button>
 
           </div>
       </mat-tab>

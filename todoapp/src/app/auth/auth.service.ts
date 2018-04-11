@@ -2,8 +2,10 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Subscriber } from 'rxjs/Subscriber';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-class UserModel {
+export class UserModel {
   username: string;
   apikey: string;
 }
@@ -15,15 +17,12 @@ export class AuthService {
   readonly LOGIN_URL = this.API_URL + '/login';
 
   onAuthStateChanged: Observable<UserModel>;
-  private subscriber: Subscriber<UserModel>;
+  private authStateSubject: BehaviorSubject<UserModel>;
 
   constructor(private http: Http) {
-    this.onAuthStateChanged = new Observable<UserModel>(
-      (subscriber) => {
-        this.subscriber = subscriber;
-        subscriber.next(JSON.parse(localStorage.getItem('user')) as UserModel);
-      }
-    )
+    console.log("authservie instantiated")
+    this.authStateSubject = new BehaviorSubject(JSON.parse(localStorage.getItem("user")));
+    this.onAuthStateChanged = this.authStateSubject.asObservable();
   }
 
   login(username: string, password: string) {
@@ -42,9 +41,14 @@ export class AuthService {
         user.apikey = body.key;
 
         localStorage.setItem("user", JSON.stringify(user));
-        this.subscriber.next(JSON.parse(localStorage.getItem("user")) as UserModel)
+        this.authStateSubject.next(JSON.parse(localStorage.getItem("user")) as UserModel)
       }
-    })
+    }) 
+  }
+
+  logout() {
+    localStorage.removeItem("user");
+    this.authStateSubject.next(null);
   }
 
   

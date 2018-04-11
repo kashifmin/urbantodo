@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
@@ -14,7 +15,7 @@ import { HttpModule } from '@angular/http';
 
 const routes: Routes = [
   { path: "tasks", component: TaskListComponent, canActivate: [ AuthGuard ] },
-  { path: "", component: LoginComponent, pathMatch: 'prefix' }
+  { path: "login", component: LoginComponent }
 ]
 
 @NgModule({
@@ -29,9 +30,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     CustomMaterialModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AuthModule
   ],
-  providers: [ AuthService, AuthGuard ],
+  providers: [ AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

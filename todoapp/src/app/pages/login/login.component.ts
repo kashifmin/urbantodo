@@ -1,5 +1,6 @@
 import { AuthService } from './../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 class UserModel {
   username: string;
@@ -9,18 +10,23 @@ class UserModel {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  providers: [ AuthService ]
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   user: UserModel = new UserModel();
 
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
+    console.log(this.auth)
     this.auth.onAuthStateChanged.subscribe(
-      (state) => console.log("authstate", state)
+      (user) => {
+        console.log("login page auth state", user);
+        // if(user != null) {
+        //   this.router.navigate(['tasks']);
+        // }
+      }
     )
   }
 

@@ -8,7 +8,8 @@ import {
   MatTabsModule,
   MatFormFieldModule,
   MatOptionModule,
-  MatSelectModule
+  MatSelectModule,
+  MatIconModule,
 } from '@angular/material';
 
 @NgModule({
@@ -20,7 +21,8 @@ import {
     MatTabsModule,
     MatFormFieldModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule,
   ],
   exports: [
     MatToolbarModule,
@@ -30,7 +32,8 @@ import {
     MatTabsModule,
     MatFormFieldModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule,
   ]
 })
 export class CustomMaterialModule { }

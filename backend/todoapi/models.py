@@ -17,14 +17,15 @@ class Task(models.Model):
 
     @property
     def status(self):
-        try:
-            subtasks = SubTask.objects.filter(parent=self)
-            for i in subtasks:
-                if not i.is_complete:
-                    return 'Pending'
-            return 'Complete'
-        except Exception:
+        subtasks = SubTask.objects.filter(parent=self)
+        if len(subtasks) == 0:
             return 'Complete' if self.is_complete else 'Pending'
+        for i in subtasks:
+            if not i.is_complete:
+                return 'Pending'
+        return 'Complete'
+        
+        
 
     @property
     def subtasks(self):

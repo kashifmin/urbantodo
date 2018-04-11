@@ -18,11 +18,12 @@ class UserResource(ModelResource):
     
 
 class SubTaskResource(ModelResource):
-    
+    status = fields.CharField(attribute='status')
     class Meta:
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
         queryset = SubTask.objects.all()
+        excludes = ['is_complete']
         resource_name = 'subtask'
 
 class TaskResource(ModelResource):
@@ -33,7 +34,7 @@ class TaskResource(ModelResource):
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
         queryset = Task.objects.all()
-        excludes = ['task_status']
+        excludes = ['is_complete']
         resource_name = 'task'
 
     def obj_get_list(self, bundle, **kwargs):

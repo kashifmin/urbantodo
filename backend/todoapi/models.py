@@ -4,12 +4,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Task(models.Model):
-    STATUSES = (
-        ('P', 'Pending'),
-        ('C', 'Complete'),
-    )
     title = models.CharField(max_length=240)
-    task_status = models.CharField(max_length=1, choices=STATUSES)
+    is_complete = models.BooleanField(default=False)
     due_date = models.DateField()
     
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,10 +20,11 @@ class Task(models.Model):
         try:
             subtasks = SubTask.objects.filter(parent=self)
             for i in subtasks:
-                if i.task_status == 'Pending':
+                if not i.is_complete:
                     return 'Pending'
+            return 'Complete'
         except Exception:
-            return self.task_status
+            return 'Complete' if self.is_complete else 'Pending'
 
     @property
     def subtasks(self):
@@ -38,14 +35,14 @@ class Task(models.Model):
             return []
 
 class SubTask(models.Model):
-    STATUSES = (
-        ('P', 'Pending'),
-        ('C', 'Complete'),
-    )
     title = models.CharField(max_length=240)
-    status = models.CharField(max_length=1, choices=STATUSES)
+    is_complete = models.BooleanField(default=False)
 
     parent = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+    @property
+    def status(self):
+        return 'Complete' if self.is_complete else 'Pending'
 
     def __str__(self):
         return self.title

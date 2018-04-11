@@ -20,4 +20,4 @@
   <p *ngIf="t.subtasks.length == 0">No subtasks.</p>
 </mat-expansion-panel>
 
-<button mat-fab class="add-button"><mat-icon>add</mat-icon></button>
+<button mat-fab class="add-button" (click)="onAddTask()"><mat-icon>add</mat-icon></button>

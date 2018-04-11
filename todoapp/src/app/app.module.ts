@@ -35,6 +35,7 @@ const routes: Routes = [
     HttpModule,
     AuthModule
   ],
+  entryComponents: [ AddTaskDialogComponent ],
   providers: [ AuthGuard ],
   bootstrap: [AppComponent]
 })

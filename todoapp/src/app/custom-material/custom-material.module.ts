@@ -13,6 +13,8 @@ import {
   MatExpansionModule,
   MatListModule,
   MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 } from '@angular/material';
 
 @NgModule({
@@ -29,6 +31,8 @@ import {
     MatExpansionModule,
     MatListModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     MatToolbarModule,
@@ -43,6 +47,8 @@ import {
     MatExpansionModule,
     MatListModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class CustomMaterialModule { }

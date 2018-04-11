@@ -1,3 +1,13 @@
-<p>
-  task-list works!
-</p>
+<mat-expansion-panel *ngFor="let t of tasks">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ t.title }}
+    </mat-panel-title>
+    <mat-panel-description>
+      Due Date: {{ t.due_date }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <p>This is the primary content of the panel.</p>
+
+</mat-expansion-panel>

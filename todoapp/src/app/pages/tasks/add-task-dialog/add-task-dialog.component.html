@@ -2,12 +2,12 @@
 <mat-dialog-content>
   <form>
     <mat-form-field>
-      <input matInput placeholder="Title">
+      <input matInput placeholder="Title" [(ngModel)]="task.title" name="title">
     </mat-form-field>
   
 
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Due Date">
+      <input matInput [matDatepicker]="picker" placeholder="Due Date" [(ngModel)]="task.due_date" name="due_date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -15,5 +15,5 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button color="primary">SAVE</button>
+  <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
 </mat-dialog-actions>

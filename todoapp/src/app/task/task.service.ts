@@ -32,4 +32,12 @@ export class TaskService {
           );
   }
 
+  addTask(task: Task): Observable<any> {
+    let headers: Headers = new Headers();
+    headers.append("Authorization", "ApiKey " + this.user.username + ':' + this.user.apikey); 
+    headers.append("Content-Type", "application/json");
+
+    return this.http.post(TaskService.TASK_API, task, { headers: headers });
+  }
+
 }

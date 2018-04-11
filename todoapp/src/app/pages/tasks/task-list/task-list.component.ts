@@ -20,18 +20,25 @@ export class TaskListComponent implements OnInit {
   constructor(private taskService: TaskService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe(
-      (tasks) => {console.log(tasks); this.tasks = tasks; this.hasErrors = false},
-      (error) => this.hasErrors = true
-    );
+    this.loadTasks();
   }
 
   onToggleSubtask(subtask: Subtask) {
     console.log('Subtask selected', subtask);
   }
 
+  loadTasks() {
+    this.taskService.getTasks().subscribe(
+      (tasks) => {console.log(tasks); this.tasks = tasks; this.hasErrors = false},
+      (error) => this.hasErrors = true
+    );
+  }
+
   onAddTask() {
-    this.dialog.open(AddTaskDialogComponent);
+    let dialog = this.dialog.open(AddTaskDialogComponent);
+    dialog.afterClosed().subscribe(
+      () => this.loadTasks()
+    )
   }
 
 }

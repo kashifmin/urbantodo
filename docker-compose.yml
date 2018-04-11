@@ -7,3 +7,8 @@ services:
     ports: ["8000:8000"]
     volumes: ['./backend:/usr/src/app']
     command: bash -c 'cd /usr/src/app && gunicorn todo.wsgi:application --log-file=- -b 0:8000 --workers 3'
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports: ["4300:80"]

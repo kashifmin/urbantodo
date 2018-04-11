@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskListComponent implements OnInit {
 
-  private tasks: Array<Task>;
+  tasks: Array<Task>;
   private hasErrors = false;
 
   constructor(private taskService: TaskService) { }

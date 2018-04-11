@@ -8,6 +8,9 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <p>This is the primary content of the panel.</p>
-
+  <mat-selection-list>
+    <mat-list-option *ngFor="let s of t.subtasks" [selected]="s.status == 'Complete'">
+      {{s.title}}
+    </mat-list-option>
+  </mat-selection-list>
 </mat-expansion-panel>

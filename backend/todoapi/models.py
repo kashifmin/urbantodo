@@ -25,6 +25,9 @@ class Task(models.Model):
                 return 'Pending'
         return 'Complete'
         
+    @status.setter
+    def status(self, value):
+        self.is_complete = True if value == 'Complete' else False
         
 
     @property
@@ -43,7 +46,11 @@ class SubTask(models.Model):
 
     @property
     def status(self):
-        return 'Complete' if self.is_complete else 'Pending'
+        self.is_complete = True if value == 'Complete' else False
+
+    @status.setter
+    def status(self, value):
+        self.is_complete = value
 
     def __str__(self):
         return self.title

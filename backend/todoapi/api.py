@@ -29,7 +29,7 @@ class SubTaskResource(ModelResource):
 class TaskResource(ModelResource):
     status = fields.CharField(attribute='status')
     subtasks = fields.ToManyField(SubTaskResource, attribute='subtasks', full=True)
-
+    owner = fields.ForeignKey(UserResource, attribute='owner')
     class Meta:
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
@@ -45,6 +45,10 @@ class TaskResource(ModelResource):
         except:
             return []
 
+    def obj_create(self, bundle, **kwargs):
+        bundle.data['owner'] = '/api/v1/user/%s/' % bundle.request.user.id
+        print(bundle.data)
+        super().obj_create(bundle)
  
 class AuthResource(Resource):
     key = fields.CharField(attribute='key')

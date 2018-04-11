@@ -12,6 +12,7 @@ import { TaskListComponent } from './pages/tasks/task-list/task-list.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AddTaskDialogComponent } from './pages/tasks/add-task-dialog/add-task-dialog.component';
 
 const routes: Routes = [
   { path: "tasks", component: TaskListComponent, canActivate: [ AuthGuard ] },
@@ -22,7 +23,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     TaskListComponent,
-    LoginComponent
+    LoginComponent,
+    AddTaskDialogComponent
   ],
   imports: [
     BrowserModule,

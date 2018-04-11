@@ -12,6 +12,7 @@ import {
   MatIconModule,
   MatExpansionModule,
   MatListModule,
+  MatDialogModule,
 } from '@angular/material';
 
 @NgModule({
@@ -27,6 +28,7 @@ import {
     MatIconModule,
     MatExpansionModule,
     MatListModule,
+    MatDialogModule,
   ],
   exports: [
     MatToolbarModule,
@@ -40,6 +42,7 @@ import {
     MatIconModule,
     MatExpansionModule,
     MatListModule,
+    MatDialogModule,
   ]
 })
 export class CustomMaterialModule { }

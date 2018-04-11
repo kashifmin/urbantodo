@@ -6,11 +6,16 @@
     <mat-panel-description>
       Due Date: {{ t.due_date }}
     </mat-panel-description>
+    <mat-panel-description>
+      <span class="pending" *ngIf="t.status == 'Pending'">{{t.status}}</span>
+      <span class="complete" *ngIf="t.status == 'Complete'">{{t.status}}</span>
+    </mat-panel-description>
   </mat-expansion-panel-header>
 
   <mat-selection-list>
-    <mat-list-option *ngFor="let s of t.subtasks" [selected]="s.status == 'Complete'">
+    <mat-list-option *ngFor="let s of t.subtasks" [selected]="s.status == 'Complete'" (toggle)="onToggleSubtask(s)">
       {{s.title}}
     </mat-list-option>
   </mat-selection-list>
+  <p *ngIf="t.subtasks.length == 0">No subtasks.</p>
 </mat-expansion-panel>

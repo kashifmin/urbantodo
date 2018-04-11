@@ -1,3 +1,4 @@
+import { Subtask } from './../../../models/subtask';
 import { TaskService } from './../../../task/task.service';
 import { Task } from './../../../models/task';
 import { Observable } from 'rxjs/Observable';
@@ -21,6 +22,10 @@ export class TaskListComponent implements OnInit {
       (tasks) => {console.log(tasks); this.tasks = tasks; this.hasErrors = false},
       (error) => this.hasErrors = true
     );
+  }
+
+  onToggleSubtask(subtask: Subtask) {
+    console.log('Subtask selected', subtask);
   }
 
 

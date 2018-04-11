@@ -1,3 +1,15 @@
 mat-panel-title {
     flex: 3;
 }
+
+mat-panel-description {
+    flex: 1;
+}
+
+.pending {
+    color: orangered;
+}
+
+.complete {
+    color: green;
+}

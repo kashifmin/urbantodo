@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from tastypie.resources import ModelResource, Resource
+from tastypie.resources import ModelResource, Resource, ALL
 from tastypie.authorization import Authorization
 from tastypie import fields
 from tastypie.authentication import BasicAuthentication, ApiKeyAuthentication
@@ -23,7 +23,7 @@ class SubTaskResource(ModelResource):
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
         queryset = SubTask.objects.all()
-        excludes = ['is_complete']
+        excludes = ['is_complete', 'deleted']
         resource_name = 'subtask'
 
 class TaskResource(ModelResource):
@@ -34,16 +34,35 @@ class TaskResource(ModelResource):
         authentication = ApiKeyAuthentication()
         authorization = Authorization()
         queryset = Task.objects.all()
-        excludes = ['is_complete']
+        excludes = ['is_complete', 'deleted']
         resource_name = 'task'
+        filtering = {
+            'title': ALL,
+            'owner': ALL
+        }
 
     def obj_get_list(self, bundle, **kwargs):
         req_user = bundle.request.user
+        
+        filters = {}
+
+        if hasattr(bundle.request, 'GET'):
+            # Grab a mutable copy.
+            filters = bundle.request.GET.copy()
+
+        # Update with the provided kwargs.
+        filters.update(kwargs)
+        # update to filter by currently authorized user
+        filters['owner'] = req_user
+        applicable_filters = self.build_filters(filters=filters)
+        # print(applicable_filters)
+
         try:
-            tasks = Task.objects.filter(owner=req_user)
-            return tasks
-        except:
-            return []
+            objects = self.apply_filters(bundle.request, applicable_filters)
+            return self.authorized_read_list(objects, bundle)
+        except ValueError:
+            raise Exception("Invalid resource lookup data provided (mismatched type).")
+
 
     def obj_create(self, bundle, **kwargs):
         bundle.data['owner'] = '/api/v1/user/%s/' % bundle.request.user.id
@@ -57,9 +76,6 @@ class AuthResource(Resource):
     class Meta:
         authentication = BasicAuthentication()
         allowed_methods = ['get']
-        
-    def obj_get_list(self, request=None, **kwargs):
-        pass
     
     def obj_get(self, request=None, **kwargs):
         req_user = kwargs['bundle'].request.user

@@ -19,6 +19,7 @@ class UserResource(ModelResource):
 
 class SubTaskResource(ModelResource):
     status = fields.CharField(attribute='status')
+    parent = fields.ForeignKey('todoapi.api.TaskResource', attribute='parent')
     class Meta:
         authentication = ApiKeyAuthentication()
         authorization = Authorization()

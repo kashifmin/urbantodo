@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from safedelete.models import SafeDeleteModel, SOFT_DELETE_CASCADE
+from safedelete.managers import SafeDeleteManager, DELETED_ONLY_VISIBLE, DELETED_INVISIBLE, DELETED_VISIBLE
 # Create your models here.
 
-class Task(models.Model):
+
+class Task(SafeDeleteModel):
     title = models.CharField(max_length=240)
     is_complete = models.BooleanField(default=False)
     due_date = models.DateField()
@@ -11,6 +13,8 @@ class Task(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    _safedelete_policy = SOFT_DELETE_CASCADE
 
     def __str__(self):
         return self.title
@@ -38,7 +42,7 @@ class Task(models.Model):
         except Exception:
             return []
 
-class SubTask(models.Model):
+class SubTask(SafeDeleteModel):
     title = models.CharField(max_length=240)
     is_complete = models.BooleanField(default=False)
 
@@ -54,4 +58,3 @@ class SubTask(models.Model):
 
     def __str__(self):
         return self.title
-

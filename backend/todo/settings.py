@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'todoapi',
     'tastypie',
     'safedelete',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+]
+
+CRON_CLASSES = [
+    'todoapi.crons.DeleteTasksJob',
 ]
 
 ROOT_URLCONF = 'todo.urls'

@@ -13,6 +13,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AddTaskDialogComponent } from './pages/tasks/add-task-dialog/add-task-dialog.component';
+import { AddSubtaskDialogComponent } from './pages/tasks/add-subtask-dialog/add-subtask-dialog.component';
 
 const routes: Routes = [
   { path: "tasks", component: TaskListComponent, canActivate: [ AuthGuard ] },
@@ -24,7 +25,8 @@ const routes: Routes = [
     AppComponent,
     TaskListComponent,
     LoginComponent,
-    AddTaskDialogComponent
+    AddTaskDialogComponent,
+    AddSubtaskDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,7 @@ const routes: Routes = [
     HttpModule,
     AuthModule
   ],
-  entryComponents: [ AddTaskDialogComponent ],
+  entryComponents: [ AddTaskDialogComponent, AddSubtaskDialogComponent ],
   providers: [ AuthGuard ],
   bootstrap: [AppComponent]
 })

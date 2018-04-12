@@ -1,3 +1,4 @@
+import { AddSubtaskDialogComponent } from './../add-subtask-dialog/add-subtask-dialog.component';
 import { Subtask } from './../../../models/subtask';
 import { TaskService } from './../../../task/task.service';
 import { Task } from './../../../models/task';
@@ -47,6 +48,13 @@ export class TaskListComponent implements OnInit {
 
   onAddTask() {
     let dialog = this.dialog.open(AddTaskDialogComponent);
+    dialog.afterClosed().subscribe(
+      () => this.loadTasks()
+    )
+  }
+
+  onAddSubtask(task: Task) {
+    let dialog = this.dialog.open(AddSubtaskDialogComponent, { data: { task: task }});
     dialog.afterClosed().subscribe(
       () => this.loadTasks()
     )

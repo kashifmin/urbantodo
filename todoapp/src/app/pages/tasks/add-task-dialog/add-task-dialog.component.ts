@@ -11,7 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class AddTaskDialogComponent implements OnInit {
 
-  task: Task = { title: "", due_date: "", status: "Pending", subtasks: []};
+  task: Task = { id: null, title: "", due_date: "", status: "Pending", subtasks: []};
 
   constructor(
     public dialogRef: MatDialogRef<AddTaskDialogComponent>,

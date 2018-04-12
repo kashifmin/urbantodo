@@ -38,9 +38,31 @@ class TaskResource(ModelResource):
         resource_name = 'task'
         filtering = {
             'title': ALL,
-            'owner': ALL
+            'owner': ALL,
+            'due_date': ALL
         }
+    
+    def conver_due_date_filter(self, filter_dict):
+        '''
+            Converts filter value for due date of the form:
+                today, this week, next week, over due
+            into a valid date range
+        '''
+        from datetime import date, timedelta
+        import todoapi.date_utils as dtu
+        value = filter_dict['due_date']
+        del filter_dict['due_date']
 
+        today = date.today()
+        if value == 'today':
+            filter_dict['due_date__exact'] = today
+        elif value == 'this week':
+            filter_dict['due_date__range'] = dtu.week_range(today)
+        elif value == 'next week':
+            filter_dict['due_date__range'] = dtu.week_range(today + timedelta(7))
+        elif value == 'overdue':
+            filter_dict['due_date__lt'] = today
+        
     def obj_get_list(self, bundle, **kwargs):
         req_user = bundle.request.user
         
@@ -54,8 +76,19 @@ class TaskResource(ModelResource):
         filters.update(kwargs)
         # update to filter by currently authorized user
         filters['owner'] = req_user
+
+        # filter by due_date if needed
+        # here custom processing is necessary since we expect
+        # get params of the form due_date__range=today
+        print('filters are ', filters)
+        due_date_filter = 'due_date'
+        if due_date_filter in filters:
+            self.conver_due_date_filter(filters)
+
+        print(filters)
         applicable_filters = self.build_filters(filters=filters)
         # print(applicable_filters)
+        print(applicable_filters)
 
         try:
             objects = self.apply_filters(bundle.request, applicable_filters)

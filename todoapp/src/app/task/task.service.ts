@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Headers } from '@angular/http';
 import { UserModel, AuthService } from './../auth/auth.service';
 import { Injectable } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class TaskService {
@@ -15,12 +16,22 @@ export class TaskService {
     this.auth.onAuthStateChanged.subscribe(user => this.user = user);
   }
 
-  getTasks() : Observable<Array<Task>> {
+  getTasks(searchText = '', dateFilter = '') : Observable<Array<Task>> {
     let headers: Headers = new Headers();
     headers.append("Authorization", "ApiKey " + this.user.username + ':' + this.user.apikey); 
     headers.append("Content-Type", "application/x-www-form-urlencoded");
+    let apiUrl = TaskService.TASK_API;
+    if(searchText != '' || dateFilter != '') {
+      let myParams = new HttpParams()
+      if(searchText != '') myParams = myParams.set('title__contains', searchText)
+      if(dateFilter != '') myParams = myParams.set('due_date', dateFilter)
+      apiUrl += '?' + myParams.toString();
+    }
 
-    return this.http.get(TaskService.TASK_API, { headers: headers })
+    
+
+    console.log("req params", apiUrl)
+    return this.http.get(apiUrl, { headers: headers })
             .pipe(map(res => {
               if(res.status == 200) {
                 let body = res.json();

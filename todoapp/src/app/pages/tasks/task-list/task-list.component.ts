@@ -17,6 +17,17 @@ export class TaskListComponent implements OnInit {
   tasks: Array<Task>;
   private hasErrors = false;
 
+  filterOptions = [
+    { display: 'Today', value: 'today'},
+    { display: 'This Week', value: 'this week'},
+    { display: 'Next week', value: 'next week'},
+    { display: 'Over due', value: 'overdue'},
+    { display: 'All', value: ''}
+  ]
+
+  searchText = '';
+
+  selectedDueDateFilter = '';
   constructor(private taskService: TaskService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -28,7 +39,7 @@ export class TaskListComponent implements OnInit {
   }
 
   loadTasks() {
-    this.taskService.getTasks().subscribe(
+    this.taskService.getTasks(this.searchText, this.selectedDueDateFilter).subscribe(
       (tasks) => {console.log(tasks); this.tasks = tasks; this.hasErrors = false},
       (error) => this.hasErrors = true
     );
@@ -39,6 +50,11 @@ export class TaskListComponent implements OnInit {
     dialog.afterClosed().subscribe(
       () => this.loadTasks()
     )
+  }
+
+  onUpdateFilters() {
+    console.log(this.searchText, this.selectedDueDateFilter);
+    this.loadTasks();
   }
 
 }

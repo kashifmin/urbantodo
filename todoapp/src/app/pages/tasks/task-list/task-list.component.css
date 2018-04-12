@@ -18,3 +18,14 @@ mat-panel-description {
     margin: 50px 50px 0 0;
     float: right;
 }
+
+.filter-menu {
+    display: flex;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.filter-menu > span, mat-select {
+    display: flex;
+    padding-top: 20px;
+}

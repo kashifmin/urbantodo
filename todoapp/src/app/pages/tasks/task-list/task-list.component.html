@@ -1,3 +1,19 @@
+<div class="filter-menu">
+    <span style="flex: 1;">Tasks due: </span>
+    <mat-select placeholder="Select due date filter" 
+    style="flex: 2;" [(value)]="selectedDueDateFilter" (selectionChange)="onUpdateFilters()">
+        <mat-option *ngFor="let f of filterOptions" [value]="f.value">
+          {{ f.display }}
+        </mat-option>
+    </mat-select>
+    <span style="flex: 3;"></span>
+    <span style="flex: 1;">Search: </span>
+    
+    <mat-form-field style="flex: 2;">
+        <input matInput placeholder="Title" type="search" [(ngModel)]="searchText">       
+    </mat-form-field>
+    <button mat-icon-button (click)="onUpdateFilters()"><mat-icon>search</mat-icon></button>
+</div>
 <mat-expansion-panel *ngFor="let t of tasks">
   <mat-expansion-panel-header>
     <mat-panel-title>
